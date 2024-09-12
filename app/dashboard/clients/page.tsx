@@ -26,13 +26,15 @@ export default function ClientsSummaryPage() {
         </Button>
       </div>
       {data === undefined || data === 0 ? (
-        <EmptyState
-          title="You dont have any Clients created"
-          description="You currently dont have any Clients. Once created you can
+        <div className="container mx-auto">
+          <EmptyState
+            title="You dont have any Clients created"
+            description="You currently dont have any Clients. Once created you can
       see them here!"
-          buttonText="Create Client"
-          href="/dashboard/clients/newClient"
-        />
+            buttonText="Create Client"
+            href="/dashboard/clients/newClient"
+          />
+        </div>
       ) : (
         <div className="max-auto container">
           <Card>
