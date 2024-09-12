@@ -12,10 +12,27 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import { EmptyState } from "@/components/dashboard/EmptyState";
+import { ClientsDataTable } from "./clients-data-table";
+import { columns } from "./columns";
+import db from "@/lib/db";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { redirect } from "next/navigation";
 
-let data = 0;
+async function getData(userId: string) {
+  const data = await db.client.findMany({
+    where: {
+      userId: userId,
+    },
+  });
 
-export default function ClientsSummaryPage() {
+  return data;
+}
+
+export default async function ClientsSummaryPage() {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+  if (!user?.id) return redirect("/api/auth/login");
+  const data = await getData(user.id);
   return (
     <>
       <div className="flex w-full justify-end">
@@ -25,7 +42,7 @@ export default function ClientsSummaryPage() {
           </Link>
         </Button>
       </div>
-      {data === undefined || data === 0 ? (
+      {data === undefined || data.length === 0 ? (
         <div className="container mx-auto">
           <EmptyState
             title="You dont have any Clients created"
@@ -46,7 +63,9 @@ export default function ClientsSummaryPage() {
                 Manage your Clients in a simple and intuitive interface
               </CardDescription>
             </CardHeader>
-            <CardContent>DATA TABLE</CardContent>
+            <CardContent>
+              <ClientsDataTable columns={columns} data={data} />
+            </CardContent>
           </Card>
         </div>
       )}
