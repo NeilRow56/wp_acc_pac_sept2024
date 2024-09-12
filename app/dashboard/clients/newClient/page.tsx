@@ -21,23 +21,26 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+
 import { parseWithZod } from "@conform-to/zod";
 import { useForm } from "@conform-to/react";
 import { clientCategories } from "@/lib/clientCategories";
 
 import { Label } from "@/components/ui/label";
 import { useFormState } from "react-dom";
-
 import { clientStatus } from "@/lib/clientStatus";
-
+import React from "react";
 import { SubmitButton } from "@/components/shared/SubmitButon";
-import { CreateClientSchema } from "@/app/schemas/client";
+import { ClientSchema } from "@/app/schemas/client";
+import { createClientAction } from "@/app/actions/client";
 
 export default function CreateClientPage() {
+  const [lastResult, action] = useFormState(createClientAction, undefined);
   const [form, fields] = useForm({
+    lastResult,
+
     onValidate({ formData }) {
-      return parseWithZod(formData, { schema: CreateClientSchema });
+      return parseWithZod(formData, { schema: ClientSchema });
     },
 
     shouldValidate: "onBlur",
@@ -64,7 +67,12 @@ export default function CreateClientPage() {
               In this form you can create your client
             </CardDescription>
           </CardHeader>
-          <form id={form.id} onSubmit={form.onSubmit} className="mx-auto">
+          <form
+            id={form.id}
+            onSubmit={form.onSubmit}
+            action={action}
+            className="mx-auto"
+          >
             <CardContent>
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-3">
@@ -77,6 +85,7 @@ export default function CreateClientPage() {
                     className="w-full"
                     placeholder="Client Name"
                   />
+                  <p className="text-red-500">{fields.name.errors}</p>
                 </div>
 
                 <div className="flex flex-col gap-3">
@@ -86,6 +95,7 @@ export default function CreateClientPage() {
                     name={fields.workSuspended.name}
                     defaultValue={fields.workSuspended.initialValue}
                   />
+                  <p className="text-red-500">{fields.workSuspended.errors}</p>
                 </div>
 
                 <div className="flex flex-col gap-3">
@@ -106,6 +116,7 @@ export default function CreateClientPage() {
                       ))}
                     </SelectContent>
                   </Select>
+                  <p className="text-red-500">{fields.category.errors}</p>
                 </div>
                 <div className="flex flex-col gap-3">
                   <Label>Status</Label>
@@ -125,6 +136,7 @@ export default function CreateClientPage() {
                       ))}
                     </SelectContent>
                   </Select>
+                  <p className="text-red-500">{fields.category.errors}</p>
                 </div>
               </div>
             </CardContent>

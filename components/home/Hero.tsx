@@ -11,8 +11,8 @@ const Hero = () => {
   return (
     <>
       <div className="flex w-full flex-col text-center">
-        <div className="mb-4 flex h-[50px] w-full items-center rounded-full border-2 border-gray-200 md:h-[80px]">
-          <div className="mx-auto flex w-full items-center justify-between sm:justify-between lg:px-48">
+        <div className="mb-4 flex h-[60px] w-full items-center rounded-full border-2 border-gray-200 px-4 md:h-[80px]">
+          <div className="mx-auto flex w-full items-center justify-between sm:justify-between xl:px-24 2xl:px-48">
             <Logo />
 
             <Computer className="h-0 w-0 text-orange-800 sm:size-12 sm:h-24" />
