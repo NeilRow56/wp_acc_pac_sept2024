@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const ClientSchema = z.object({
+export const CreateClientSchema = z.object({
   name: z.string().min(4, {
     message: "Client name must be at least 4 characters",
   }),

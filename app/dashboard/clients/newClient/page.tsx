@@ -1,25 +1,16 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+
 import {
   Select,
   SelectContent,
@@ -27,126 +18,120 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import { ChevronLeft } from "lucide-react";
+import Link from "next/link";
+import React from "react";
+import { parseWithZod } from "@conform-to/zod";
+import { useForm } from "@conform-to/react";
 import { clientCategories } from "@/lib/clientCategories";
+
+import { Label } from "@/components/ui/label";
+import { useFormState } from "react-dom";
+
 import { clientStatus } from "@/lib/clientStatus";
-import { Button } from "@/components/ui/button";
-import { ClientSchema } from "@/app/schemas/client";
 
-const handleSubmit = (values: z.infer<typeof ClientSchema>) => {
-  console.log({ values });
-};
+import { SubmitButton } from "@/components/shared/SubmitButon";
+import { CreateClientSchema } from "@/app/schemas/client";
 
-export default function NewClientPage() {
-  const form = useForm<z.infer<typeof ClientSchema>>({
-    resolver: zodResolver(ClientSchema),
-    defaultValues: {
-      name: "",
+export default function CreateClientPage() {
+  const [form, fields] = useForm({
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema: CreateClientSchema });
     },
+
+    shouldValidate: "onBlur",
+    shouldRevalidate: "onInput",
   });
+
   return (
     <>
-      <div className="flex flex-1 flex-col items-center gap-4">
-        <Card className="max-w-2xl flex-col text-xl">
+      <div className="flex items-center gap-4">
+        <Button variant="outline" size="icon" asChild>
+          <Link href="/dashboard/clients">
+            <ChevronLeft className="h-4 w-4" />
+          </Link>
+        </Button>
+        <h1 className="text-xl font-semibold tracking-tight">Clients</h1>
+      </div>
+      <div className="flex flex-grow flex-col items-center justify-center">
+        <Card className="w-full max-w-[650px]">
           <CardHeader>
-            <CardTitle className="text-3xl font-bold text-primary">
-              Create Client
+            <CardTitle className="text-2xl font-bold text-primary">
+              Client Details
             </CardTitle>
             <CardDescription>
-              Create your Client here. Click the button below once your done...
+              In this form you can create your client
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="flex flex-col gap-y-6">
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(handleSubmit)}
-                  className="w-full space-y-8"
-                >
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-xl">Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Client name" {...field} />
-                        </FormControl>
-                        <FormDescription>
-                          Client name as shown on statutory accounts or tax
-                          return
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+          <form id={form.id} onSubmit={form.onSubmit} className="mx-auto">
+            <CardContent>
+              <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-3">
+                  <Label>Name</Label>
+                  <Input
+                    type="text"
+                    key={fields.name.key}
+                    name={fields.name.name}
+                    defaultValue={fields.name.initialValue}
+                    className="w-full"
+                    placeholder="Client Name"
                   />
+                </div>
 
-                  <FormField
-                    control={form.control}
-                    name="category"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-xl">Category</FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select an entity type" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {clientCategories.map((category) => (
-                              <SelectItem
-                                key={category.id}
-                                value={category.name}
-                              >
-                                {category.title}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                <div className="flex flex-col gap-3">
+                  <Label>Work Suspended</Label>
+                  <Switch
+                    key={fields.workSuspended.key}
+                    name={fields.workSuspended.name}
+                    defaultValue={fields.workSuspended.initialValue}
                   />
-                  <FormField
-                    control={form.control}
-                    name="status"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-xl">Status</FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select the current status of the entity" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {clientStatus.map((status) => (
-                              <SelectItem key={status.id} value={status.name}>
-                                {status.title}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                </div>
 
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button type="submit" className="w-full">
-                    Submit
-                  </Button>
-                </form>
-              </Form>
-            </div>
-          </CardContent>
+                <div className="flex flex-col gap-3">
+                  <Label>Category</Label>
+                  <Select
+                    key={fields.category.key}
+                    name={fields.category.name}
+                    defaultValue={fields.category.initialValue}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {clientCategories.map((category) => (
+                        <SelectItem key={category.id} value={category.name}>
+                          {category.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex flex-col gap-3">
+                  <Label>Status</Label>
+                  <Select
+                    key={fields.status.key}
+                    name={fields.status.name}
+                    defaultValue={fields.status.initialValue}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {clientStatus.map((status) => (
+                        <SelectItem key={status.id} value={status.name}>
+                          {status.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <SubmitButton text="Create Client" />
+            </CardFooter>
+          </form>
         </Card>
       </div>
     </>
