@@ -53,20 +53,22 @@ export default async function ClientsSummaryPage() {
           />
         </div>
       ) : (
-        <div className="max-auto container">
-          <Card>
-            <CardHeader>
-              <CardTitle className="mb-2 font-bold text-primary">
-                Clients
-              </CardTitle>
-              <CardDescription>
-                Manage your Clients in a simple and intuitive interface
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ClientsDataTable columns={columns} data={data} />
-            </CardContent>
-          </Card>
+        <div className="container mx-auto">
+          <div className="">
+            <Card>
+              <CardHeader>
+                <CardTitle className="mb-2 text-3xl font-bold text-primary">
+                  Clients
+                </CardTitle>
+                <CardDescription>
+                  Manage your Clients in a simple and intuitive interface
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ClientsDataTable columns={columns} data={data} />
+              </CardContent>
+            </Card>
+          </div>
         </div>
       )}
     </>
