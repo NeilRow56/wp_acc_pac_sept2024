@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { DashboardItems } from "@/components/dashboard/DashboardItems";
 import { ThemeToggle } from "@/components/dashboard/ThemeToggle";
 import { Logo } from "@/components/shared/Logo";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
@@ -57,7 +58,11 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem asChild>
-                  <Button>Logout</Button>
+                  <LogoutLink>
+                    <span className="ml-6 justify-items-center text-red-400">
+                      Logout
+                    </span>
+                  </LogoutLink>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

@@ -4,18 +4,17 @@ import Image from "next/image";
 import React from "react";
 
 import { Computer } from "lucide-react";
-import { Button } from "../ui/button";
+
 import { Logo } from "@/components/shared/Logo";
 
 const Hero = () => {
   return (
     <>
       <div className="flex w-full flex-col text-center">
-        <div className="mb-4 flex h-[50px] w-full items-center rounded-full bg-slate-100 md:h-[80px]">
-          <div className="w-full lg:px-48 mx-auto  flex items-center justify-between sm:justify-between">
-            <Button className="cursor-none bg-secondary">
-              <Logo />
-            </Button>
+        <div className="mb-4 flex h-[50px] w-full items-center rounded-full border-2 border-gray-200 md:h-[80px]">
+          <div className="mx-auto flex w-full items-center justify-between sm:justify-between lg:px-48">
+            <Logo />
+
             <Computer className="h-0 w-0 text-orange-800 sm:size-12 sm:h-24" />
           </div>
         </div>
