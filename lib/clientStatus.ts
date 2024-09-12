@@ -14,4 +14,9 @@ export const clientStatus = [
     title: "Archived",
     name: "archived",
   },
+  {
+    id: 4,
+    title: "STOP WORK",
+    name: "stop_work",
+  },
 ];

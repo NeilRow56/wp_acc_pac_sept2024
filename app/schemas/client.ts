@@ -12,5 +12,5 @@ export const ClientSchema = z.object({
     "charity",
     "other",
   ]),
-  status: z.enum(["awaiting_ml_checks", "active", "archived"]),
+  status: z.enum(["awaiting_ml_checks", "active", "archived", "stop_work"]),
 });

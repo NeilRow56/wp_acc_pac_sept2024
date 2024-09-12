@@ -26,7 +26,7 @@ export async function createClientAction(prevState: any, formData: FormData) {
     data: {
       name: submission.value.name,
       status: submission.value.status,
-      workSuspended: submission.value.workSuspended === true ? true : false,
+      // workSuspended: submission.value.workSuspended === true ? true : false,
       category: submission.value.category,
       userId: user.id,
     },

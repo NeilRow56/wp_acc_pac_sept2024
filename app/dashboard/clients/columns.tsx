@@ -26,8 +26,8 @@ export type Client = {
     | "sole_trader"
     | "charity"
     | "other";
-  status: "awaiting_ml_checks" | "active" | "archived";
-  workSuspended: true | false;
+  status: "awaiting_ml_checks" | "active" | "archived" | "stop_work";
+  // workSuspended: true | false;
 };
 
 export const columns: ColumnDef<Client>[] = [
@@ -60,6 +60,11 @@ export const columns: ColumnDef<Client>[] = [
         </Button>
       );
     },
+    cell: ({ row }) => (
+      <div className={cn("rounded-lg p-2 text-start capitalize")}>
+        {row.original.category}
+      </div>
+    ),
   },
   {
     accessorKey: "status",
@@ -84,6 +89,7 @@ export const columns: ColumnDef<Client>[] = [
           row.original.status === "active" &&
             "bg-emerald-400/10 text-emerald-500",
           row.original.status === "archived" && "bg-red-400/10 text-red-500",
+          row.original.status === "stop_work" && "bg-red-400/10 text-red-500",
           row.original.status === "awaiting_ml_checks" &&
             "bg-amber-400/10 text-amber-500",
         )}

@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
+
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 
@@ -88,7 +88,7 @@ export default function CreateClientPage() {
                   <p className="text-red-500">{fields.name.errors}</p>
                 </div>
 
-                <div className="flex flex-col gap-3">
+                {/* <div className="flex flex-col gap-3">
                   <Label>Work Suspended</Label>
                   <Switch
                     key={fields.workSuspended.key}
@@ -96,7 +96,7 @@ export default function CreateClientPage() {
                     defaultValue={fields.workSuspended.initialValue}
                   />
                   <p className="text-red-500">{fields.workSuspended.errors}</p>
-                </div>
+                </div> */}
 
                 <div className="flex flex-col gap-3">
                   <Label>Category</Label>
