@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function EditYearFile() {
-  return <div>Edit Year File</div>;
+export default function YearFile() {
+  return <div>Year File Index page</div>;
 }

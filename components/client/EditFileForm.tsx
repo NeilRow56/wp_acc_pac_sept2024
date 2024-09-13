@@ -1,7 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-
 import {
   Card,
   CardContent,
@@ -9,32 +7,41 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Atom } from "lucide-react";
-import Link from "next/link";
+import slugify from "react-slugify";
+import { toast } from "sonner";
 import React, { useState } from "react";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 
-import slugify from "react-slugify";
-import { toast } from "sonner";
-import { SubmitButton } from "@/components/shared/SubmitButon";
+import { Button } from "../ui/button";
+import { ArrowLeft, Atom, ChevronLeft } from "lucide-react";
+
+import Link from "next/link";
+import { EditFileActions } from "@/app/actions/clientFile";
 import { ClientFileSchema } from "@/app/schemas/clientFile";
-import { CreateClientFileAction } from "@/app/actions/clientFile";
+import { SubmitButton } from "../shared/SubmitButon";
 import { useFormState } from "react-dom";
-import db from "@/lib/db";
 
-export default function CreateFilePage({
-  params,
-}: {
-  params: { clientId: string };
-}) {
-  const [slug, setSlugValue] = useState<undefined | string>("");
-  const [period, setPeriod] = useState<undefined | string>("");
+interface EditFileFormProps {
+  data: {
+    slug: string;
+    period: string;
+    shortDate: number;
+    periodStart: any;
+    periodEnd: any;
+    clientId: string;
+    id: string;
+  };
+  clientId: string;
+}
 
-  const [lastResult, action] = useFormState(CreateClientFileAction, undefined);
+export function EditFileForm({ data, clientId }: EditFileFormProps) {
+  const [slug, setSlugValue] = useState<undefined | string>(data.slug);
+  const [period, setPeriod] = useState<undefined | string>(data.period);
+
+  const [lastResult, action] = useFormState(EditFileActions, undefined);
   const [form, fields] = useForm({
     lastResult,
 
@@ -59,19 +66,15 @@ export default function CreateFilePage({
   }
   return (
     <>
-      <div className="flex w-full items-center">
-        <Button size="icon" variant="outline" className="mr-12" asChild>
-          <Link href={`/dashboard/clients/${params.clientId}`}>
-            <ArrowLeft className="size-4" />
-          </Link>
-        </Button>
-        <h1 className="text-2xl font-bold text-primary">Create File</h1>
-      </div>
-      <div className="container mx-auto flex max-w-[900px] flex-col justify-center">
-        <Card className="mt-8">
+      <div className="flex flex-grow flex-col items-center justify-center">
+        <Card className="w-full max-w-[700px]">
           <CardHeader>
-            <CardTitle className="text-xl font-bold">File Details</CardTitle>
-            <CardDescription>Add basic file information.</CardDescription>
+            <CardTitle className="space-y-2 text-3xl font-bold text-primary">
+              File Details
+            </CardTitle>
+            <CardDescription>
+              Sumary details of currently selected file.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <form
@@ -80,9 +83,10 @@ export default function CreateFilePage({
               action={action}
               className="flex flex-col gap-6"
             >
-              <input type="hidden" name="clientId" value={params.clientId} />
+              <input type="hidden" name="currentFileId" value={data.id} />
+              <input type="hidden" name="clientId" value={data.clientId} />
               <div className="grid gap-2">
-                <Label className="text-lg font-bold">Period </Label>
+                <Label>Period </Label>
 
                 <Input
                   key={fields.period.key}
@@ -97,7 +101,7 @@ export default function CreateFilePage({
               </div>
 
               <div className="grid gap-2">
-                <Label className="text-lg font-bold">Slug</Label>
+                <Label>Slug</Label>
                 <Input
                   key={fields.slug.key}
                   name={fields.slug.name}
@@ -118,12 +122,16 @@ export default function CreateFilePage({
               </div>
 
               <div className="grid gap-2">
-                <Label className="text-lg font-bold">Period start date </Label>
+                <Label>Period start date </Label>
                 <Input
                   key={fields.periodStart.key}
                   name={fields.periodStart.name}
-                  defaultValue={fields.periodStart.initialValue}
-                  type="date"
+                  defaultValue={data.periodStart.toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })}
+                  type="text"
                   placeholder=" 01.01.2023"
                 />
                 <p className="text-sm text-red-500">
@@ -131,12 +139,16 @@ export default function CreateFilePage({
                 </p>
               </div>
               <div className="grid gap-2">
-                <Label className="text-lg font-bold">Period end date </Label>
+                <Label>Period end date </Label>
                 <Input
                   key={fields.periodEnd.key}
                   name={fields.periodEnd.name}
-                  defaultValue={fields.periodEnd.initialValue}
-                  type="date"
+                  defaultValue={data.periodEnd.toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })}
+                  type="text"
                   placeholder=" 01.01.2023"
                 />
                 <p className="text-sm text-red-500">
@@ -145,19 +157,18 @@ export default function CreateFilePage({
               </div>
 
               <div className="grid gap-2">
-                <Label className="text-lg font-bold">
-                  Short date (number e.g. 2024){" "}
-                </Label>
+                <Label>Short date (number e.g. 2024) </Label>
                 <Input
+                  className="px-4"
                   key={fields.shortDate.key}
                   name={fields.shortDate.name}
-                  defaultValue={fields.shortDate.initialValue}
+                  defaultValue={data.shortDate}
                   type="number"
                 />
                 <p className="text-sm text-red-500">{fields.period.errors}</p>
               </div>
 
-              <SubmitButton text="Create File" />
+              <SubmitButton text="Edit File" />
             </form>
           </CardContent>
         </Card>

@@ -156,25 +156,27 @@ export const columns: ColumnDef<CurrentFile>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel className="font-bold text-primary">
+              Actions
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <Link
                 href={`/dashboard/clients/${yearFile.clientId}/${yearFile.id}`}
               >
-                Files
+                Working papers
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link
-                href={`/dashboard/clients/${yearFile.clientId}/${yearFile.id}/editClientFile`}
+                href={`/dashboard/clients/${yearFile.clientId}/${yearFile.id}/editYearFile`}
               >
                 Edit
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link
-                href={`/dashboard/clients/${yearFile.clientId}/${yearFile.id}/deleteClientFile`}
+                href={`/dashboard/clients/${yearFile.clientId}/${yearFile.id}/deleteYearFile`}
               >
                 Delete
               </Link>
