@@ -27,7 +27,7 @@ model Client {
   User         User?   @relation(fields: [userId], references: [id])
   userId       String? @db.String
   createdAt    DateTime @default(now())
-  currentFiles      YearFile[]
+  yearFiles      YearFile[]
  
 }
 

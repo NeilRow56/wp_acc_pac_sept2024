@@ -83,7 +83,7 @@ export function EditFileForm({ data, clientId }: EditFileFormProps) {
               action={action}
               className="flex flex-col gap-6"
             >
-              <input type="hidden" name="currentFileId" value={data.id} />
+              <input type="hidden" name="yearFileId" value={data.id} />
               <input type="hidden" name="clientId" value={data.clientId} />
               <div className="grid gap-2">
                 <Label>Period </Label>

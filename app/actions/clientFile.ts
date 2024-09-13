@@ -58,7 +58,7 @@ export async function EditFileActions(prevState: any, formData: FormData) {
   const data = await db.yearFile.update({
     where: {
       userId: user.id,
-      id: formData.get("currentFileId") as string,
+      id: formData.get("yearFileId") as string,
     },
     data: {
       period: submission.value.period,
@@ -72,13 +72,13 @@ export async function EditFileActions(prevState: any, formData: FormData) {
   return redirect(`/dashboard/clients/${formData.get("clientId")}`);
 }
 
-export async function DeleteClientFile(formData: FormData) {
+export async function DeleteFileAction(formData: FormData) {
   const user = await requireUser();
 
   const data = await db.yearFile.delete({
     where: {
       userId: user.id,
-      id: formData.get("clientId") as string,
+      id: formData.get("yearFileId") as string,
     },
   });
 
