@@ -4,7 +4,7 @@ export const ClientSchema = z.object({
   name: z.string().min(4, {
     message: "Client name must be at least 4 characters",
   }),
-  workSuspended: z.boolean().optional(),
+
   category: z.enum([
     "limited_company",
     "partnership",

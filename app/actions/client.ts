@@ -34,3 +34,55 @@ export async function createClientAction(prevState: any, formData: FormData) {
 
   redirect("/dashboard/clients");
 }
+
+export async function editClientAction(prevState: any, formData: FormData) {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user) {
+    return redirect("/");
+  }
+
+  const submission = parseWithZod(formData, {
+    schema: ClientSchema,
+  });
+
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
+
+  const clientId = formData.get("clientId") as string;
+  await db.client.update({
+    where: {
+      id: clientId,
+    },
+    data: {
+      name: submission.value.name,
+
+      category: submission.value.category,
+
+      status: submission.value.status,
+    },
+  });
+
+  redirect("/dashboard/clients");
+}
+
+export async function deleteClient(formData: FormData) {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  //Set this to senior company admin person. At present it will not allow us to delete a client
+  // if (!user || user.email !== "jan@alenix.de") {
+  if (!user) {
+    return redirect("/");
+  }
+
+  const data = await db.client.delete({
+    where: {
+      id: formData.get("clientId") as string,
+    },
+  });
+
+  return redirect("/dashboard/clients");
+}

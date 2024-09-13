@@ -78,12 +78,7 @@ export default async function ClientIDPage({
             View What?
           </Link>
         </Button>
-        <Button asChild variant="secondary">
-          <Link href={`/dashboard/clients/${params.clientId}/edit`}>
-            <Edit className="mr-2 size-4" />
-            Edit
-          </Link>
-        </Button>
+
         <Button asChild>
           <Link href={`/dashboard/clients/${params.clientId}/createFile`}>
             <PlusCircle className="mr-2 size-4" />
