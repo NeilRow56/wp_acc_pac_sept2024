@@ -81,14 +81,38 @@ export function ClientsDataTable<TData, TValue>({
   return (
     <>
       <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter clients..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm border-primary"
-        />
+        <div className="mr-16 flex w-full justify-between">
+          <Input
+            placeholder="Filter clients..."
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("name")?.setFilterValue(event.target.value)
+            }
+            className="max-w-[250px] border-primary"
+          />
+          <div className="ml-24 mr-20 flex gap-36">
+            <Input
+              placeholder="Filter categories..."
+              value={
+                (table.getColumn("category")?.getFilterValue() as string) ?? ""
+              }
+              onChange={(event) =>
+                table.getColumn("category")?.setFilterValue(event.target.value)
+              }
+              className="max-w-[250px] border-primary"
+            />
+            <Input
+              placeholder="Filter status..."
+              value={
+                (table.getColumn("status")?.getFilterValue() as string) ?? ""
+              }
+              onChange={(event) =>
+                table.getColumn("status")?.setFilterValue(event.target.value)
+              }
+              className="max-w-[250px] border-primary"
+            />
+          </div>
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto border-primary">

@@ -45,6 +45,13 @@ export const columns: ColumnDef<Client>[] = [
         </Button>
       );
     },
+    cell: ({ row }) => (
+      <div
+        className={cn("rounded-lg p-2 text-start text-lg font-bold capitalize")}
+      >
+        {row.original.name}
+      </div>
+    ),
   },
   {
     accessorKey: "category",
