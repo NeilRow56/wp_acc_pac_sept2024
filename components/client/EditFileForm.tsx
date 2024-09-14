@@ -69,7 +69,7 @@ export function EditFileForm({ data, clientId }: EditFileFormProps) {
       <div className="flex flex-grow flex-col items-center justify-center">
         <Card className="w-full max-w-[700px]">
           <CardHeader>
-            <CardTitle className="space-y-2 text-3xl font-bold text-primary">
+            <CardTitle className="space-y-2 text-3xl font-bold">
               File Details
             </CardTitle>
             <CardDescription>
