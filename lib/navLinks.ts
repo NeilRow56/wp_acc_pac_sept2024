@@ -11,19 +11,19 @@ export const navLinks = [
     href: "/dashboard/clients",
     icon: Users,
   },
-  {
-    name: "Completion",
-    href: "/dashboard/completion",
-    icon: SquareCheck,
-  },
-  {
-    name: "Planning",
-    href: "/dashboard/planning",
-    icon: MapPin,
-  },
-  {
-    name: "Working Papers",
-    href: "/dashboard/working_papers",
-    icon: FileStack,
-  },
+  // {
+  //   name: "Completion",
+  //   href: "/dashboard/completion",
+  //   icon: SquareCheck,
+  // },
+  // {
+  //   name: "Planning",
+  //   href: "/dashboard/planning",
+  //   icon: MapPin,
+  // },
+  // {
+  //   name: "Working Papers",
+  //   href: "/dashboard/working_papers",
+  //   icon: FileStack,
+  // },
 ];
