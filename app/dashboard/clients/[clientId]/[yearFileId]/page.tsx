@@ -83,66 +83,132 @@ export default async function YearFile({
         </div>
       </div>
       <nav className="flex max-w-[450px] flex-col gap-6 pl-12 text-primary">
-        <div className="rounded-md border border-gray-200">
-          <Link className="" href={`${params.yearFileId}/accounts`}>
+        <h2 className="text-2xl text-black">Section Links</h2>
+        <div className="">
+          <Link
+            className="hover:text-red-800"
+            href={`${params.yearFileId}/accounts`}
+          >
             Accounts
           </Link>
         </div>
         <div>
-          <Link href={`${params.yearFileId}/completion`}>Completion</Link>
+          <Link
+            className="hover:text-red-800"
+            href={`${params.yearFileId}/completion`}
+          >
+            Completion
+          </Link>
         </div>
         <div>
-          <Link href={`${params.yearFileId}/taxation`}>Taxation</Link>
+          <Link
+            className="hover:text-red-800"
+            href={`${params.yearFileId}/planning`}
+          >
+            Planning
+          </Link>
         </div>
         <div>
-          <Link href={`${params.yearFileId}/related_parties`}>
+          <Link
+            className="hover:text-red-800"
+            href={`${params.yearFileId}/taxation`}
+          >
+            Taxation
+          </Link>
+        </div>
+        <div>
+          <Link
+            className="hover:text-red-800"
+            href={`${params.yearFileId}/related_parties`}
+          >
             Related Parties
           </Link>
         </div>
         <div>
-          <Link href={`${params.yearFileId}/fixedAssets`}>Fixed Assets</Link>
+          <Link
+            className="hover:text-red-800"
+            href={`${params.yearFileId}/fixedAssets`}
+          >
+            Fixed Assets
+          </Link>
         </div>
         <div>
-          <Link href={`${params.yearFileId}/stocks`}>Stocks and W.I.P</Link>
+          <Link
+            className="hover:text-red-800"
+            href={`${params.yearFileId}/stocks`}
+          >
+            Stocks and W.I.P
+          </Link>
         </div>
         <div>
-          <Link href={`${params.yearFileId}/sales_debtors`}>
+          <Link
+            className="hover:text-red-800"
+            href={`${params.yearFileId}/sales_debtors`}
+          >
             Sales and Debtors
           </Link>
         </div>
         <div>
-          <Link href={`${params.yearFileId}/cash_bank`}>Cash and Bank</Link>
+          <Link
+            className="hover:text-red-800"
+            href={`${params.yearFileId}/cash_bank`}
+          >
+            Cash and Bank
+          </Link>
         </div>
         <div>
-          <Link href={`${params.yearFileId}/purchases_creditors`}>
+          <Link
+            className="hover:text-red-800"
+            href={`${params.yearFileId}/purchases_creditors`}
+          >
             Purchases and Creditors
           </Link>
         </div>
         <div>
-          <Link href={`${params.yearFileId}/provisions_liabilities_charges`}>
+          <Link
+            className="hover:text-red-800"
+            href={`${params.yearFileId}/provisions_liabilities_charges`}
+          >
             Provision for Liabilities and Charges
           </Link>
         </div>
         <div>
-          <Link href={`${params.yearFileId}/share_capital_reserves`}>
+          <Link
+            className="hover:text-red-800"
+            href={`${params.yearFileId}/share_capital_reserves`}
+          >
             Share Capital, Reserves and Statutory Information
           </Link>
         </div>
         <div>
-          <Link href={`${params.yearFileId}/wages_salaries`}>
+          <Link
+            className="hover:text-red-800"
+            href={`${params.yearFileId}/wages_salaries`}
+          >
             Wages and Salaries
           </Link>
         </div>
         <div>
-          <Link href={`${params.yearFileId}/trial_balance_journals`}>
+          <Link
+            className="hover:text-red-800"
+            href={`${params.yearFileId}/trial_balance_journals`}
+          >
             Trial Balance and Journals
           </Link>
         </div>
         <div>
-          <Link href={`${params.yearFileId}/vat`}>VAT</Link>
+          <Link
+            className="hover:text-red-800"
+            href={`${params.yearFileId}/vat`}
+          >
+            VAT
+          </Link>
         </div>
         <div>
-          <Link href={`${params.yearFileId}/drawings_capital_introduced`}>
+          <Link
+            className="hover:text-red-800"
+            href={`${params.yearFileId}/drawings_capital_introduced`}
+          >
             Drawings and Capital Introduced
           </Link>
         </div>

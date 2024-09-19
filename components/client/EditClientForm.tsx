@@ -55,8 +55,6 @@ export function EditClientForm({ data }: EditClientProps) {
     shouldRevalidate: "onInput",
   });
 
-  console.log(data);
-
   return (
     <>
       <div className="flex items-center gap-4">

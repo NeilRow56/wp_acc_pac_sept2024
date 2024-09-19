@@ -11,11 +11,11 @@ export const navLinks = [
     href: "/dashboard/clients",
     icon: Users,
   },
-  // {
-  //   name: "Completion",
-  //   href: "/dashboard/completion",
-  //   icon: SquareCheck,
-  // },
+  {
+    name: "Example File - Large",
+    href: "/dashboard/exampleLargeFile",
+    icon: SquareCheck,
+  },
   // {
   //   name: "Planning",
   //   href: "/dashboard/planning",
