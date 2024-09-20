@@ -12,8 +12,8 @@ export const navLinks = [
     icon: Users,
   },
   {
-    name: "Example File - Large",
-    href: "/dashboard/exampleLargeFile",
+    name: "Templates",
+    href: "/dashboard/templates",
     icon: SquareCheck,
   },
   // {
