@@ -23,12 +23,11 @@ model Client {
   name         String
   category     ClientCategory 
   status       ClientStatus
-  // workSuspended      Boolean       @default(false)
   User         User?   @relation(fields: [userId], references: [id])
   userId       String? @db.String
   createdAt    DateTime @default(now())
   yearFiles      YearFile[]
- 
+
 }
 
 model YearFile {
@@ -52,20 +51,20 @@ model YearFile {
 
 model PlanningFile {
   id                 String @id @default(cuid()) @map("_id") @db.String
-  itemOne            String?
-  itemOneCompleted   Boolean       @default(false)
-  itemTwo            String?
-  itemTwoCompleted   Boolean       @default(false)
-  itemThree          String?
-  itemThreeCompleted Boolean       @default(false)
-  itemFour           String?
-  itemFourCompleted  Boolean       @default(false)
-  itemFive           String?
-  itemFiveCompleted  Boolean       @default(false)
-  itemSix            String?
-  itemSixCompleted   Boolean       @default(false)
-  itemSeven          String?
-  itemSevenCompleted Boolean       @default(false)
+  taxOne            String?
+  taxOneCompleted   Boolean       @default(false)
+  taxTwo            String?
+  taxTwoCompleted   Boolean       @default(false)
+  taxThree          String?
+  taxThreeCompleted Boolean       @default(false)
+  taxFour           String?
+  taxFourCompleted  Boolean       @default(false)
+  taxFive           String?
+  taxFiveCompleted  Boolean       @default(false)
+  taxSix            String?
+  taxSixCompleted   Boolean       @default(false)
+  taxSeven          String?
+  taxSevenCompleted Boolean       @default(false)
   yearFileId         String        @db.String
   YearFile           YearFile      @relation(fields: [yearFileId], references: [id])
   
