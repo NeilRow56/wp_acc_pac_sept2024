@@ -4,6 +4,7 @@ import { notFound, usePathname } from "next/navigation";
 import React from "react";
 import {
   Card,
+  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -15,40 +16,33 @@ import Link from "next/link";
 import { SquareCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-async function getData(yearFileId: string) {
-  const data = await db.yearFile.findUnique({
+async function getPlanningFiles(yearFileId: string) {
+  const result = await db.planningFile.findFirst({
+    where: {
+      yearFileId: yearFileId,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  return result;
+}
+
+async function getAccountingPeriod(yearFileId: string) {
+  const accountingPeriod = await db.yearFile.findUnique({
     where: {
       id: yearFileId,
     },
     select: {
       period: true,
-      slug: true,
-      shortDate: true,
-      periodStart: true,
-      periodEnd: true,
-      clientId: true,
-      id: true,
     },
   });
-  if (!data) {
+  if (!accountingPeriod) {
     return notFound();
   }
 
-  return data;
-}
-
-async function getYearFiles(clientId: string) {
-  const allFiles = await db.yearFile.findMany({
-    take: 6,
-    where: {
-      clientId: clientId,
-    },
-    orderBy: {
-      shortDate: "desc",
-    },
-  });
-
-  return allFiles;
+  return accountingPeriod;
 }
 
 async function getClientDetails(clientId: string) {
@@ -66,9 +60,9 @@ export default async function YearFile({
 }: {
   params: { yearFileId: string; clientId: string };
 }) {
-  const data = await getData(params.yearFileId);
+  const accountingPeriod = await getAccountingPeriod(params.yearFileId);
   const clientDetails = await getClientDetails(params.clientId);
-  const clientFiles = await getYearFiles(params.clientId);
+  const results = await getPlanningFiles(params.yearFileId);
 
   return (
     <div>
@@ -78,163 +72,41 @@ export default async function YearFile({
             <h2 className="text-4xl font-bold text-primary">
               {clientDetails?.name}
             </h2>
-            <h3 className="text-xl">{data.period}</h3>
+            <h3 className="text-xl">{accountingPeriod.period}</h3>
           </div>
         </div>
       </div>
       <nav className="flex max-w-[450px] flex-col gap-6 pl-12 text-primary">
         <h2 className="text-2xl text-black">Section Links</h2>
-        <div className="">
-          <Link
-            className="hover:text-red-800"
-            href={`${params.yearFileId}/accounts`}
-          >
-            Accounts
-          </Link>
-        </div>
-        <div>
-          <Link
-            className="hover:text-red-800"
-            href={`${params.yearFileId}/completion`}
-          >
-            Completion
-          </Link>
-        </div>
-        <div>
-          <Link
-            className="hover:text-red-800"
-            href={`${params.yearFileId}/planning`}
-          >
-            Planning
-          </Link>
-        </div>
-        <div>
-          <Link
-            className="hover:text-red-800"
-            href={`${params.yearFileId}/taxation`}
-          >
-            Taxation
-          </Link>
-        </div>
-        <div>
-          <Link
-            className="hover:text-red-800"
-            href={`${params.yearFileId}/related_parties`}
-          >
-            Related Parties
-          </Link>
-        </div>
-        <div>
-          <Link
-            className="hover:text-red-800"
-            href={`${params.yearFileId}/fixedAssets`}
-          >
-            Fixed Assets
-          </Link>
-        </div>
-        <div>
-          <Link
-            className="hover:text-red-800"
-            href={`${params.yearFileId}/stocks`}
-          >
-            Stocks and W.I.P
-          </Link>
-        </div>
-        <div>
-          <Link
-            className="hover:text-red-800"
-            href={`${params.yearFileId}/sales_debtors`}
-          >
-            Sales and Debtors
-          </Link>
-        </div>
-        <div>
-          <Link
-            className="hover:text-red-800"
-            href={`${params.yearFileId}/cash_bank`}
-          >
-            Cash and Bank
-          </Link>
-        </div>
-        <div>
-          <Link
-            className="hover:text-red-800"
-            href={`${params.yearFileId}/purchases_creditors`}
-          >
-            Purchases and Creditors
-          </Link>
-        </div>
-        <div>
-          <Link
-            className="hover:text-red-800"
-            href={`${params.yearFileId}/provisions_liabilities_charges`}
-          >
-            Provision for Liabilities and Charges
-          </Link>
-        </div>
-        <div>
-          <Link
-            className="hover:text-red-800"
-            href={`${params.yearFileId}/share_capital_reserves`}
-          >
-            Share Capital, Reserves and Statutory Information
-          </Link>
-        </div>
-        <div>
-          <Link
-            className="hover:text-red-800"
-            href={`${params.yearFileId}/wages_salaries`}
-          >
-            Wages and Salaries
-          </Link>
-        </div>
-        <div>
-          <Link
-            className="hover:text-red-800"
-            href={`${params.yearFileId}/trial_balance_journals`}
-          >
-            Trial Balance and Journals
-          </Link>
-        </div>
-        <div>
-          <Link
-            className="hover:text-red-800"
-            href={`${params.yearFileId}/vat`}
-          >
-            VAT
-          </Link>
-        </div>
-        <div>
-          <Link
-            className="hover:text-red-800"
-            href={`${params.yearFileId}/drawings_capital_introduced`}
-          >
-            Drawings and Capital Introduced
-          </Link>
-        </div>
       </nav>
-      {/* <h1 className="mb-5 mt-10 text-2xl font-semibold">Recent Articles</h1>
-      {clientFiles.length > 0 ? (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-7 md:px-24">
-          {clientFiles.map((item) => (
-            <Card key={item.id}>
-              <CardHeader>
-                <CardTitle className="truncate">{item.shortDate}</CardTitle>
-                <CardDescription className="line-clamp-3">
-                  {item.period}
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          ))}
+      {results === undefined || !results ? (
+        <div className="container mx-auto">
+          <EmptyState
+            title="Planning has not yet been created"
+            description="Please create here!"
+            buttonText="Create Planning File"
+            href={`${params.yearFileId}/createPlanning`}
+          />
         </div>
       ) : (
-        <EmptyState
-          title="You dont have any articles created"
-          description="Your currently dont have any articles created. Please create some so that you can see them right here"
-          buttonText="Create Article"
-          href="/dashboard/sites"
-        />
-      )} */}
+        <div className="max-auto container">
+          <Card>
+            <CardHeader>
+              <CardTitle className="mb-2 font-bold text-primary">
+                <div>
+                  <Link
+                    className="hover:text-red-800"
+                    href={`${params.yearFileId}/${results?.id}`}
+                  >
+                    Planning
+                  </Link>
+                </div>
+              </CardTitle>
+              <CardDescription></CardDescription>
+            </CardHeader>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
