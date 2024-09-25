@@ -12,7 +12,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import React, { useState } from "react";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 
@@ -27,11 +26,14 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
+import { JSONContent } from "novel";
+
 export default function CreatePlanningPage({
   params,
 }: {
   params: { clientId: string; yearFileId: string };
 }) {
+  // const [taxOne, setTaxOne] = useState<JSONContent | undefined>();
   const [lastResult, action] = useFormState(createPlanningAction, undefined);
   const [form, fields] = useForm({
     lastResult,
@@ -103,6 +105,19 @@ export default function CreatePlanningPage({
                           "Prepare tax computations and proof of tax charge."
                         }
                       />
+                      {/* <input
+                        type="hidden"
+                        key={fields.taxOne.key}
+                        name={fields.taxOne.name}
+                        defaultValue={
+                          "Prepare tax computations and proof of tax charge."
+                        }
+                        // value={JSON.stringify(taxOne)}
+                      />
+                      <TailwindEditor
+                        onChange={setTaxOne}
+                        initialValue={taxOne}
+                      /> */}
                       <p className="text-red-500">{fields.taxOne.errors}</p>
                       <div className="w1/6 i flex h-12 flex-col items-center justify-center">
                         <Switch
@@ -249,7 +264,7 @@ export default function CreatePlanningPage({
                         name={fields.taxSix.name}
                         className="w-full"
                         placeholder=""
-                        defaultValue={""}
+                        defaultValue={" "}
                       />
                       <p className="text-red-500">{fields.taxSix.errors}</p>
                       <div className="w1/6 i flex h-12 flex-col items-center justify-center">
@@ -277,7 +292,7 @@ export default function CreatePlanningPage({
                         name={fields.taxSeven.name}
                         className="w-full"
                         placeholder=""
-                        defaultValue={""}
+                        defaultValue={" "}
                       />
                       <p className="text-red-500">{fields.taxSeven.errors}</p>
                       <div className="w1/6 i flex h-12 flex-col items-center justify-center">

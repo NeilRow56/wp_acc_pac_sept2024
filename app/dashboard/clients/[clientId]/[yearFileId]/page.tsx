@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-import { SquareCheck } from "lucide-react";
+import { ArrowLeft, SquareCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 async function getPlanningFiles(yearFileId: string) {
@@ -65,7 +65,7 @@ export default async function YearFile({
   const results = await getPlanningFiles(params.yearFileId);
 
   return (
-    <div>
+    <>
       <div>
         <div className="container mx-auto flex w-full justify-center">
           <div className="my-8">
@@ -74,6 +74,14 @@ export default async function YearFile({
             </h2>
             <h3 className="text-xl">{accountingPeriod.period}</h3>
           </div>
+        </div>
+        <div className="mb-12 flex items-center">
+          <Button size="icon" variant="outline" asChild className="mr-12">
+            <Link href={`/dashboard/clients/${params.clientId}`}>
+              <ArrowLeft className="size-4" />
+            </Link>
+          </Button>
+          <h1 className="text-2xl font-semibold text-primary">Files</h1>
         </div>
       </div>
       <nav className="flex max-w-[450px] flex-col gap-6 pl-12 text-primary">
@@ -107,6 +115,6 @@ export default async function YearFile({
           </Card>
         </div>
       )}
-    </div>
+    </>
   );
 }
