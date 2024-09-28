@@ -6,11 +6,16 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
 
-async function getData(yearFileId: string, planningFileId: string) {
+async function getData(
+  yearFileId: string,
+  planningFileId: string,
+  clientId: string,
+) {
   const data = await db.planningFile.findFirst({
     where: {
       id: planningFileId,
       yearFileId: yearFileId,
+      clientId: clientId,
     },
   });
 
@@ -52,7 +57,11 @@ export default async function IndividualPlanningPage({
 }: {
   params: { clientId: string; yearFileId: string; planningFileId: string };
 }) {
-  const data = await getData(params.yearFileId, params.planningFileId);
+  const data = await getData(
+    params.yearFileId,
+    params.planningFileId,
+    params.clientId,
+  );
   const clientDetails = await getClientDetails(params.clientId);
   const accountingPeriod = await getAccountingPeriod(params.yearFileId);
   return (
@@ -80,7 +89,11 @@ export default async function IndividualPlanningPage({
           <div className="mb-6 flex w-full justify-center">
             <h1 className="text-4xl font-bold">Edit Planning</h1>
           </div>
-          <EditPlanningForm data={data} yearFileId={params.yearFileId} />
+          <EditPlanningForm
+            data={data}
+            yearFileId={params.yearFileId}
+            clientId={params.clientId}
+          />
         </div>
       </div>
       {/* Planning File ID: {data?.id} */}

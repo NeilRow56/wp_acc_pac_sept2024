@@ -44,9 +44,14 @@ interface EditPlanningFormProps {
     taxSevenCompleted?: boolean;
   };
   yearFileId: string;
+  clientId: string;
 }
 
-export function EditPlanningForm({ data, yearFileId }: EditPlanningFormProps) {
+export function EditPlanningForm({
+  data,
+  yearFileId,
+  clientId,
+}: EditPlanningFormProps) {
   // const [taxOne, setTaxOne] = useState<JSONContent | undefined>(data.taxOne);
   const [lastResult, action] = useFormState(EditPlanningActions, undefined);
   const [form, fields] = useForm({
@@ -85,6 +90,7 @@ export function EditPlanningForm({ data, yearFileId }: EditPlanningFormProps) {
           <CardContent>
             <input type="hidden" name="planningFileId" value={data.id} />
             <input type="hidden" name="yearFileId" value={yearFileId} />
+            <input type="hidden" name="clientId" value={clientId} />
             <div className="flex w-full">
               <div className="flex w-5/6 flex-col gap-6">
                 <div className="mr-5 flex flex-col gap-3">

@@ -70,7 +70,9 @@ export default function CreateFilePage({
       <div className="container mx-auto flex max-w-[900px] flex-col justify-center">
         <Card className="mt-8">
           <CardHeader>
-            <CardTitle className="text-xl font-bold">File Details</CardTitle>
+            <CardTitle className="text-3xl font-bold text-primary">
+              File Details
+            </CardTitle>
             <CardDescription>Add basic file information.</CardDescription>
           </CardHeader>
           <CardContent>

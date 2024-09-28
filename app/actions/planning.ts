@@ -40,6 +40,7 @@ export async function createPlanningAction(prevState: any, formData: FormData) {
       taxSeven: submission.value.taxSeven,
       taxSevenCompleted: submission.value.taxSevenCompleted,
       yearFileId: formData.get("yearFileId") as string,
+      clientId: formData.get("clientId") as string,
     },
   });
 
@@ -63,6 +64,7 @@ export async function EditPlanningActions(prevState: any, formData: FormData) {
     where: {
       id: formData.get("planningFileId") as string,
       yearFileId: formData.get("yearFileId") as string,
+      clientId: formData.get("clientId") as string,
     },
     data: {
       taxOne: submission.value.taxOne,

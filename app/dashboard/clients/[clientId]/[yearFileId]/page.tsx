@@ -28,6 +28,19 @@ async function getPlanningFiles(yearFileId: string) {
 
   return result;
 }
+async function getDebtorsFiles(yearFileId: string) {
+  const result = await db.debtors.findFirst({
+    where: {
+      yearFileId: yearFileId,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  return result;
+}
+//
 
 async function getAccountingPeriod(yearFileId: string) {
   const accountingPeriod = await db.yearFile.findUnique({
@@ -62,7 +75,8 @@ export default async function YearFile({
 }) {
   const accountingPeriod = await getAccountingPeriod(params.yearFileId);
   const clientDetails = await getClientDetails(params.clientId);
-  const results = await getPlanningFiles(params.yearFileId);
+  const planningResults = await getPlanningFiles(params.yearFileId);
+  const debtorsResults = await getDebtorsFiles(params.yearFileId);
 
   return (
     <>
@@ -87,7 +101,8 @@ export default async function YearFile({
       <nav className="flex max-w-[450px] flex-col gap-6 pl-12 text-primary">
         <h2 className="text-2xl text-black">Section Links</h2>
       </nav>
-      {results === undefined || !results ? (
+      {/* Planning */}
+      {planningResults === undefined || !planningResults ? (
         <div className="container mx-auto">
           <EmptyState
             title="Planning has not yet been created"
@@ -97,22 +112,39 @@ export default async function YearFile({
           />
         </div>
       ) : (
-        <div className="max-auto container">
-          <Card>
-            <CardHeader>
-              <CardTitle className="mb-2 font-bold text-primary">
-                <div>
-                  <Link
-                    className="hover:text-red-800"
-                    href={`${params.yearFileId}/${results?.id}`}
-                  >
-                    Planning
-                  </Link>
-                </div>
-              </CardTitle>
-              <CardDescription></CardDescription>
-            </CardHeader>
-          </Card>
+        <div className="flex w-[300px]">
+          <Button asChild size="lg" className="ml-12">
+            <Link
+              className=""
+              href={`${params.yearFileId}/${planningResults?.id}`}
+            >
+              Planning
+            </Link>
+          </Button>
+        </div>
+      )}
+
+      {/* Debtors */}
+
+      {debtorsResults === undefined || !debtorsResults ? (
+        <div className="container mx-auto">
+          <EmptyState
+            title="Debtors schedules have not yet been created"
+            description="Please create here!"
+            buttonText="Create Debtors File"
+            href={`${params.yearFileId}/createTradeDebtors`}
+          />
+        </div>
+      ) : (
+        <div className="flex w-[300px]">
+          <Button asChild size="lg" className="ml-12">
+            <Link
+              className=""
+              href={`${params.yearFileId}/debtors/${debtorsResults?.id}`}
+            >
+              Debtors
+            </Link>
+          </Button>
         </div>
       )}
     </>

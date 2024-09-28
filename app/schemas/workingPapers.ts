@@ -17,4 +17,16 @@ export const CreatePlanningSchema = z.object({
   taxSevenCompleted: z.boolean().optional(),
 
   yearFileId: z.string(),
+  clientId: z.string(),
 });
+
+export const DebtorsSchema = z.object({
+  id: z.string(),
+  narrative: z.string(),
+  amount: z.coerce.number().positive(),
+  yearFileId: z.string(),
+  clientId: z.string(),
+});
+
+export const CreateDebtorsSchema = DebtorsSchema.omit({ id: true });
+export type CreateDebtorsSchemaType = z.infer<typeof CreateDebtorsSchema>;

@@ -27,6 +27,8 @@ model Client {
   userId       String? @db.String
   createdAt    DateTime @default(now())
   yearFiles      YearFile[]
+  planningFiles      PlanningFile[]
+  debtors       Debtors[]
 
 }
 
@@ -41,6 +43,7 @@ model YearFile {
   createdAt          DateTime @default(now())
   updatedAt          DateTime @default(now())
   planningFiles      PlanningFile[]
+  debtors            Debtors[]
   clientId           String           @db.String
   Client             Client           @relation(fields: [clientId], references: [id])
   User         User?   @relation(fields: [userId], references: [id])
@@ -67,7 +70,20 @@ model PlanningFile {
   taxSevenCompleted Boolean       @default(false)
   yearFileId         String        @db.String
   YearFile           YearFile      @relation(fields: [yearFileId], references: [id])
+  clientId           String        @db.String
+  Client             Client      @relation(fields: [clientId], references: [id])
   
+}
+
+model Debtors {
+  id                 String @id @default(cuid()) @map("_id") @db.String
+  narrative          String
+  amount             Int
+
+  yearFileId         String        @db.String
+  YearFile           YearFile      @relation(fields: [yearFileId], references: [id])
+  clientId           String        @db.String
+  Client             Client      @relation(fields: [clientId], references: [id])
 }
 
 
